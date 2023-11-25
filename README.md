@@ -15,8 +15,9 @@ inference.
 - **ColourConstantsPremadeVarargs.java:** This was a hacky test to determine
   whether the auto-generated varargs-array was the problem. (It was.)
 
-- **ColourConstantsCopyOf.java:** This was both a control, but also a test of
-  whether something weird was going on with Map APIs.
+- **ColourConstantsCopyOf.java:** This is what the class looked like before my
+  edit, except I've wrapped it in a Map.copyOf() just to see whether there's
+  some issue with Map APIs.
 
 - **ColourConstantsTypedVarargs.java:** This was to test whether removing type
   inference by making it explicit removes the problem. (It does.)
