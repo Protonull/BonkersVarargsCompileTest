@@ -1,16 +1,16 @@
 # BonkersVarargsCompileTest
 
-Came across this while working on a fork for a project. There was a class,
-ostensibly static, but was just an exposed, mutable HashMap. I switched this
-over to Java's fancy new Map APIs to create unmodifiable Maps... but this
-turned out to increase the compile time of the project from around 10 seconds
-to around 11 minutes, a 66x increase.
+Came across this issue while working on a project fork. There was a class with
+ostensibly static data, but were just exposed HashMaps and HashSets, so I used
+Java's Map and Set [ofEntries() methods](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html#ofEntries%28java.util.Map.Entry...%29) 
+that were added in Java 9, but this turned out to increase compilation from
+around 10 seconds to around 11 minutes, a 66x increase.
 
 After some asking around and testing, we narrowed it down to vararg type
 inference.
 
 - **ColourConstantsVarargs.java:** This is a direct copy-paste of my edit that
-  sent ruined my life for two hours.
+  ruined my life for two hours.
 
 - **ColourConstantsPremadeVarargs.java:** This was a hacky test to determine
   whether the auto-generated varargs-array was the problem. (It was.)
@@ -23,7 +23,8 @@ inference.
   inference by making it explicit removes the problem. (It does.)
 
 There's something in particular about type-inference within an auto-generated
-varargs array that the compiler just does not like.
+varargs array that the compiler just does not like, and causes compilation time
+to massively suffer.
 
 ## How to run
 
